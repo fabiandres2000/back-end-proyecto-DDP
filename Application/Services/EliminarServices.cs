@@ -172,6 +172,22 @@ namespace Application.Services
 
         }
 
+        public EliminarResponse EliminarExamen(int id)
+        {
+            Examen examen = _unitOfWork.ExamenRepository.Find(id);
+            if (examen == null)
+            {
+                return new EliminarResponse() { Message = $"No Existe" };
+            }
+            else
+            {
+                _unitOfWork.ExamenRepository.Delete(examen);
+                _unitOfWork.Commit();
+                return new EliminarResponse() { Message = $"Se Elimio correctamente este tipo de examen" };
+            }
+
+        }
+
 
 
     }

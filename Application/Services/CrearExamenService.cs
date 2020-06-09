@@ -17,7 +17,7 @@ namespace Application.Services
 
         }
 
-        public TratamientoResponse CrearExamen(ExamenRequest request)
+        public ExamenResponse CrearExamen(ExamenRequest request)
         {
             Examen examen = _unitOfWork.ExamenRepository.FindFirstOrDefault(T => T.Tipo == request.Tipo);
             if (examen == null)
@@ -28,19 +28,19 @@ namespace Application.Services
                 {
                     _unitOfWork.ExamenRepository.Add(NuevoExamen);
                     _unitOfWork.Commit();
-                    return new TratamientoResponse() { Message = $"Se Registro el examen satisfactoriamente" };
+                    return new ExamenResponse() { Message = $"Se Registro el examen satisfactoriamente" };
                 }
-                return new TratamientoResponse() { Message = $"LLene todos los campos" };
+                return new ExamenResponse() { Message = $"LLene todos los campos" };
             }
             else
             {
-                return new TratamientoResponse() { Message = $"Ya Existe Compa :(" };
+                return new ExamenResponse() { Message = $"Ya Existe Compa :(" };
             }
         }
 
     }
 
-    public class ExamenResponce
+    public class ExamenResponse
     {
         public string Message { get; set; }
     }
