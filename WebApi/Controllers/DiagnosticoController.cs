@@ -53,5 +53,13 @@ namespace WebApi.Controllers
             return res.GetIdMedico(IdMedico);
         }
 
+        [HttpPut("[action]")]
+        public ActionResult<IEnumerable<Diagnostico>> CompletarDiagnostico(CompletarDiagnosticoRequest request)
+        {
+            CompletarDiagnosticoService completar = new CompletarDiagnosticoService(_unitOfWork);
+            CompletarDiagnosticoResponse response = completar.Completar(request);
+            return Ok(response);
+        }
+
     }
 }

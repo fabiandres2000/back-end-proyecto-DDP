@@ -18,30 +18,27 @@ namespace Application.Services
 
         }
 
+
         public CompletarDiagnosticoResponse Completar(CompletarDiagnosticoRequest request) {
-
-
-           ConsultarDiagnosticoService consultarDiagnostico = new ConsultarDiagnosticoService(_unitOfWork);
-            var DiagnosticoPendiente=consultarDiagnostico.Diagnostico(request.Estado, request.Id);
+            var DiagnosticoPendiente  = _unitOfWork.DiagnosticoRepository.FindFirstOrDefault(x=>x.Id == request.Id);
+            var tratamiento = _unitOfWork.TratamientoRepository.FindFirstOrDefault(y=>y.Id == request.Tratamiento);
+            var examen = _unitOfWork.ExamenRepository.FindFirstOrDefault(z=>z.Id == request.Examen);
+            DiagnosticoPendiente.Examen = examen;
+            DiagnosticoPendiente.Tratamiento = tratamiento;
             DiagnosticoPendiente.RecomendacionMedica = request.RecomendacionMedica;
             DiagnosticoPendiente.Estado = "Revisado";
             
             _unitOfWork.DiagnosticoRepository.Edit(DiagnosticoPendiente);
             _unitOfWork.Commit();
-            _unitOfWork.Dispose();
-
             return new CompletarDiagnosticoResponse() { Message = $"Se Reviso Diagnostico" };
         }
-          
-            
-            
-        
     }
 
     public class CompletarDiagnosticoRequest
     {
         public string RecomendacionMedica { get; set; }
-        public string Estado { get; set; }
+        public int Examen { get; set; }
+        public int Tratamiento { get; set; }
         public int Id { get; set; }
     }
 

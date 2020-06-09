@@ -17,6 +17,8 @@ namespace Domain.Entity
         public string RecomendacionMedica { get; set; }
         public Examen Examen { get; set; }
 
+        public Tratamiento Tratamiento { get; set; }
+
         public Diagnostico()
         {
             

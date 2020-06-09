@@ -34,7 +34,7 @@ namespace WebApi.Controllers
         }
 
         [HttpGet("[action]")]
-        public IEnumerable<Examen> Medicos()
+        public IEnumerable<Examen> Examenes()
         {
             ConsultarExamenService servicio = new ConsultarExamenService(_unitOfWork);
             List<Examen> Lista = servicio.GetAll();
