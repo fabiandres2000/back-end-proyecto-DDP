@@ -54,7 +54,7 @@ namespace WebApi.Controllers
         }
 
         [HttpPut("[action]")]
-        public ActionResult<IEnumerable<Diagnostico>> CompletarDiagnostico(CompletarDiagnosticoRequest request)
+        public ActionResult<CompletarDiagnosticoResponse> CompletarDiagnostico([FromBody]CompletarDiagnosticoRequest request)
         {
             CompletarDiagnosticoService completar = new CompletarDiagnosticoService(_unitOfWork);
             CompletarDiagnosticoResponse response = completar.Completar(request);
