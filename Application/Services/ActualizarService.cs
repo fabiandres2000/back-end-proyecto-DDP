@@ -160,7 +160,6 @@ namespace Application.Services
                 Buscar.Sexo = request.Sexo;
                 Buscar.Telefono = request.Telefono;
                 Buscar.Especializacion = request.Especializacion;
-                Buscar.Citas = request.Citas;
                 _unitOfWork.IMedicoRepository.Edit(Buscar);
                 _unitOfWork.Commit();
                 return new MedicoResponse() { Message = $"Sus datos fueron actualizados correctamente, por favor vuelva a iniciar sesion para que se reflejen los cambios." };

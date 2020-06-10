@@ -20,24 +20,13 @@ namespace Domain.Entity
         public Municipio Municipio { get; set; }
         public Departamento DepartamentoResidencia { get; set; }
         public string Especializacion { get; set; }
-        public List<Cita> Citas { get; set; }
-    
+       
         public  Medico()
         {
-            Citas = new List<Cita>();
             Edad = 0;
         }
 
-        public bool Verificar_disponibilidad(string fecha,int minuto,int hora)
-        {
-            var disponibilidad  = Citas.Where(x =>x.Fecha == fecha&& x.Minuto==minuto&&x.Hora==hora).Count();
-            if (disponibilidad>=1)
-            {
-                return false;
-            }
-            return true;
-        }
-
+       
         public string Guardar(Medico medico)
         {
             if (medico.Identificacion == null || medico.Nombres == null || medico.Apellidos == null || medico.Edad == 0 || medico.Direccion == null || medico.Especializacion == null)
