@@ -20,30 +20,35 @@ namespace Application.Services
 
         public CitaResponse CrearCita(CitaRequest request)
         {
-            request.Paciente= _unitOfWork.IPacienteRepository.FindFirstOrDefault(P => P.Identificacion == request.Idpaciente);
-            request.Medico = _unitOfWork.IMedicoRepository.FindFirstOrDefault(P => P.Identificacion == request.Paciente.Medico.Identificacion);
-            
-            if (request.Medico == null)
+
+            var paciente_prueba = _unitOfWork.IPacienteRepository.FindBy(p => p.Identificacion == request.Idpaciente, includeProperties: "Medico").ToList();
+            var  Paciente= _unitOfWork.IPacienteRepository.FindFirstOrDefault(P => P.Identificacion==request.Idpaciente);
+            var Medico = Paciente.Medico;
+
+            if (Medico == null)
             {
                 return new CitaResponse() { Message = $"Aun no se le ha asignado un medico, vaya a la opcion --> asociar medico" };
             }
 
-            Cita cita = _unitOfWork.CitaRepository.FindFirstOrDefault(C => C.Fecha == request.Fecha && C.Hora == request.Hora && C.Minuto == request.Minuto && C.Medico == request.Medico);
+            Cita cita = _unitOfWork.CitaRepository.FindFirstOrDefault(C => C.Fecha == request.Fecha && C.Hora == request.Hora && C.Minuto == request.Minuto && C.Medico == Medico);
 
             if (cita != null)
             {
                 return new CitaResponse() { Message = $"Esta hora ya esta ocupada, seleccione otra" };
             }
             
+
             Cita NuevaCita = new Cita();
-            NuevaCita.Medico = request.Medico;
-            NuevaCita.Paciente = request.Paciente;
+            NuevaCita.Medico = Medico;
+            NuevaCita.Paciente = Paciente;
             NuevaCita.Fecha = request.Fecha;
             NuevaCita.Hora = request.Hora;
             NuevaCita.Minuto = request.Minuto;
+            
             _unitOfWork.CitaRepository.Add(NuevaCita);
             _unitOfWork.Commit();
-            return new CitaResponse() { Message = $"Se Registro su cita con el medico : {request.Medico.Apellidos} {request.Medico.Nombres}" };
+            
+            return new CitaResponse() { Message = $"Se Registro su cita con el medico : {Medico.Apellidos} {Medico.Nombres}" };
 
           
         }
@@ -57,10 +62,7 @@ namespace Application.Services
         public string Fecha { get; set; }
         public int Hora { get; set; }
         public int Minuto { get; set; }
-        public Medico Medico { get; set; }
-        public Paciente Paciente { get; set; }
-
-
+    
     }
 
     public class CitaResponse

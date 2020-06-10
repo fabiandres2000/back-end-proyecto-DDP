@@ -188,6 +188,22 @@ namespace Application.Services
 
         }
 
+        public EliminarResponse EliminarCita(int id)
+        {
+            Cita cita = _unitOfWork.CitaRepository.Find(id);
+            if (cita == null)
+            {
+                return new EliminarResponse() { Message = $"No Existe la cita seleccionada" };
+            }
+            else
+            {
+                _unitOfWork.CitaRepository.Delete(cita);
+                _unitOfWork.Commit();
+                return new EliminarResponse() { Message = $"Se Elimio correctamente la cita seleccionada" };
+            }
+
+        }
+
 
 
     }
