@@ -22,7 +22,7 @@ namespace WebApi.Controllers
         }
 
         [HttpPost]
-        public ActionResult<CitaResponse> Post(CitaRequest request)
+        public ActionResult<CitaResponse> ApartarCita(CitaRequest request)
         {
             CrearCitaService _service = new CrearCitaService(_unitOfWork);
             CitaResponse response = _service.CrearCita(request);

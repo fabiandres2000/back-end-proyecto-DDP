@@ -24,6 +24,10 @@ namespace Application.Services
             var DiagnosticoPendiente  = _unitOfWork.DiagnosticoRepository.FindFirstOrDefault(x=>x.Id == request.Id);
             var tratamiento = _unitOfWork.TratamientoRepository.FindFirstOrDefault(y=>y.Codigo == request.Tratamiento);
             var examen = _unitOfWork.ExamenRepository.FindFirstOrDefault(z=>z.Id == request.Examen);
+            if (DiagnosticoPendiente == null || tratamiento == null || examen == null)
+            {
+                return new CompletarDiagnosticoResponse() { Message = $"LLene todos los campos primero" };
+            }
             DiagnosticoPendiente.Examen = examen;
             DiagnosticoPendiente.Tratamiento = tratamiento;
             DiagnosticoPendiente.RecomendacionMedica = request.RecomendacionMedica;
@@ -31,7 +35,7 @@ namespace Application.Services
             
             _unitOfWork.DiagnosticoRepository.Edit(DiagnosticoPendiente);
             _unitOfWork.Commit();
-            return new CompletarDiagnosticoResponse() { Message = $"Se Reviso Diagnostico" };
+            return new CompletarDiagnosticoResponse() { Message = $"Se Reviso Correctamente El Diagnostico" };
         }
     }
 

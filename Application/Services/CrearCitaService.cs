@@ -20,30 +20,32 @@ namespace Application.Services
 
         public CitaResponse CrearCita(CitaRequest request)
         {
-            Cita cita = _unitOfWork.CitaRepository.FindFirstOrDefault(C => C.Id == request.Id);
-            request.Medico = _unitOfWork.IMedicoRepository.FindFirstOrDefault(P => P.Identificacion == request.IdMedico);
-            var Medico= _unitOfWork.IMedicoRepository.FindFirstOrDefault(P => P.Identificacion == request.IdMedico);
-            request.Paciente= _unitOfWork.IPacienteRepository.FindFirstOrDefault(P => P.Identificacion == request.IdEnfermedad);
-            var Disponibilidad = request.Medico.Verificar_disponibilidad(request.Fecha,request.Minuto,request.Hora);
-            var fecha = _unitOfWork.CitaRepository.FindBy(C => C.Fecha == request.Fecha && C.Hora == request.Hora && C.Minuto == request.Minuto).ToList();
-            if (cita==null && fecha==null && Disponibilidad)
+            request.Paciente= _unitOfWork.IPacienteRepository.FindFirstOrDefault(P => P.Identificacion == request.Idpaciente);
+            request.Medico = _unitOfWork.IMedicoRepository.FindFirstOrDefault(P => P.Identificacion == request.Paciente.Medico.Identificacion);
+            
+            if (request.Medico == null)
             {
-                Cita NuevaCita = new Cita();
-                NuevaCita.Medico = request.Medico;
-                NuevaCita.Paciente = request.Paciente;
-                NuevaCita.Fecha = request.Fecha;
-                NuevaCita.Hora = request.Hora;
-                NuevaCita.Minuto = request.Minuto;
-                Medico.Citas.Add(NuevaCita);
-                _unitOfWork.CitaRepository.Add(NuevaCita);
-                _unitOfWork.Commit();
-                return new CitaResponse() { Message = $"Se Registro su cita con el medico : {request.Medico.Apellidos} {request.Medico.Nombres}" };
+                return new CitaResponse() { Message = $"Aun no se le ha asignado un medico, vaya a la opcion --> asociar medico" };
+            }
 
-            }
-            else
+            Cita cita = _unitOfWork.CitaRepository.FindFirstOrDefault(C => C.Fecha == request.Fecha && C.Hora == request.Hora && C.Minuto == request.Minuto && C.Medico == request.Medico);
+
+            if (cita != null)
             {
-                return new CitaResponse() { Message = $"No  Registro Compa" };
+                return new CitaResponse() { Message = $"Esta hora ya esta ocupada, seleccione otra" };
             }
+            
+            Cita NuevaCita = new Cita();
+            NuevaCita.Medico = request.Medico;
+            NuevaCita.Paciente = request.Paciente;
+            NuevaCita.Fecha = request.Fecha;
+            NuevaCita.Hora = request.Hora;
+            NuevaCita.Minuto = request.Minuto;
+            _unitOfWork.CitaRepository.Add(NuevaCita);
+            _unitOfWork.Commit();
+            return new CitaResponse() { Message = $"Se Registro su cita con el medico : {request.Medico.Apellidos} {request.Medico.Nombres}" };
+
+          
         }
 
 
@@ -51,21 +53,13 @@ namespace Application.Services
 
     public class CitaRequest
     {
-        public string IdMedico{ get; set; }
-        public string IdEnfermedad { get; set; }
-        public int Id { get; set; }
+        public string Idpaciente { get; set; }
         public string Fecha { get; set; }
         public int Hora { get; set; }
         public int Minuto { get; set; }
-
         public Medico Medico { get; set; }
         public Paciente Paciente { get; set; }
 
-        public CitaRequest( Medico medico , Paciente paciente)
-        {
-            this.Medico = medico;
-            this.Paciente = paciente;
-        }
 
     }
 

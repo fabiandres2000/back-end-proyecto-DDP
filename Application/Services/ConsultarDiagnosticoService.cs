@@ -28,7 +28,7 @@ namespace Application.Services
 
         public List<Diagnostico> GetIdPaciente(string Identificacion)
         {
-            var ConsultarId = _unitOfWork.DiagnosticoRepository.FindBy(D => D.Paciente.Identificacion == Identificacion, includeProperties: "Paciente,Enfermedad");
+            var ConsultarId = _unitOfWork.DiagnosticoRepository.FindBy(D => D.Paciente.Identificacion == Identificacion, includeProperties: "Paciente,Enfermedad,Tratamiento,Examen");
             return ConsultarId.ToList();
         }
 
