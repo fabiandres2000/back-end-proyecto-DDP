@@ -40,7 +40,10 @@ namespace Application.Services
         }
     }
 
-   
+   public class CancelarCitaRequest
+    {
+        public int Id { get; set; }
+    }
     public class CancelarCitaResponse
     {
         public string Message { get; set; }

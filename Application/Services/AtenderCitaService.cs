@@ -40,7 +40,10 @@ namespace Application.Services
         }
     }
 
-
+    public class AtenderCitaRequest
+    {
+        public int Id { get; set; }
+    }
     public class AtenderCitaResponse
     {
         public string Message { get; set; }

@@ -62,18 +62,18 @@ namespace WebApi.Controllers
         }
 
         [HttpPut("[action]")]
-        public ActionResult<EnfermedadResponse> CancelarCita(int id)
+        public ActionResult<EnfermedadResponse> CancelarCita(CancelarCitaRequest request)
         {
             CancelarCitaServicecs _service = new CancelarCitaServicecs(_unitOfWork);
-            CancelarCitaResponse response = _service.CancelarCita(id);
+            CancelarCitaResponse response = _service.CancelarCita(request.Id);
             return Ok(response);
         }
 
         [HttpPut("[action]")]
-        public ActionResult<EnfermedadResponse> AtenderCita(int id)
+        public ActionResult<EnfermedadResponse> AtenderCita(AtenderCitaRequest request)
         {
             AtenderCitaService _service = new AtenderCitaService(_unitOfWork);
-            AtenderCitaResponse response = _service.AtenderCita(id);
+            AtenderCitaResponse response = _service.AtenderCita(request.Id);
             return Ok(response);
         }
     }
