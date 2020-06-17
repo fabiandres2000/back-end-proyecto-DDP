@@ -60,5 +60,21 @@ namespace WebApi.Controllers
             EliminarResponse response = _service.EliminarCita(id);
             return Ok(response);
         }
+
+        [HttpPut("[action]")]
+        public ActionResult<EnfermedadResponse> CancelarCita(int id)
+        {
+            CancelarCitaServicecs _service = new CancelarCitaServicecs(_unitOfWork);
+            CancelarCitaResponse response = _service.CancelarCita(id);
+            return Ok(response);
+        }
+
+        [HttpPut("[action]")]
+        public ActionResult<EnfermedadResponse> AtenderCita(int id)
+        {
+            AtenderCitaService _service = new AtenderCitaService(_unitOfWork);
+            AtenderCitaResponse response = _service.AtenderCita(id);
+            return Ok(response);
+        }
     }
 }
