@@ -13,8 +13,7 @@ namespace Domain.Entity
         public int Minuto { get; set; }
         public Medico Medico { get; set; }
         public Paciente Paciente { get; set; }  
-
-
+        public string Estado { get; set; }
         public string Asignar(Cita cita)
         {
             if (cita.Fecha == null || cita.Hora == null || cita.Minuto == null || cita.Medico==null || cita.Paciente==null)

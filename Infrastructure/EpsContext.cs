@@ -34,12 +34,12 @@ namespace Infrastructure
         {
 
         }
-        
+        /*
          protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer(@"Server=DESKTOP-Q5U0CKK\SQLEXPRESS;Database=EpsBD;Integrated Security=True;");
         }
-
+        */
         
     }
 }

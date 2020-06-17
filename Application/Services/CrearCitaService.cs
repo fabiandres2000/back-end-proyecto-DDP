@@ -44,7 +44,7 @@ namespace Application.Services
             NuevaCita.Fecha = request.Fecha;
             NuevaCita.Hora = request.Hora;
             NuevaCita.Minuto = request.Minuto;
-            
+            NuevaCita.Estado = "pendiente";
             _unitOfWork.CitaRepository.Add(NuevaCita);
             _unitOfWork.Commit();
             
