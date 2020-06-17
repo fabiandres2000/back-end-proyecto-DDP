@@ -48,6 +48,21 @@ namespace Aplication.Test
             var options = new DbContextOptionsBuilder<EpsContext>().UseInMemoryDatabase("BDeps").Options;
             _context = new EpsContext(options);
             unitOfWork = new UnitOfWork(_context);
+
+            Medico medico2 = new Medico()
+            {
+                Identificacion = "123",
+                Nombres = "fabian",
+                Apellidos = "quintero",
+                CorreoElectronico = "34563@gmail.com",
+                Direccion = "valledupar",
+                Edad = 23,
+                Especializacion = "pulmonar",
+                Estrato = 5,
+                Sexo = "M",
+                Telefono = "3123345666",
+            };
+
             paciente = new PacienteRequest()
             {
                 Identificacion = "1234",
@@ -59,7 +74,8 @@ namespace Aplication.Test
                 Estrato = 2,
                 Sexo = "M",
                 Telefono = "3173345666",
-                TipoAfiliacion ="cotizante"
+                TipoAfiliacion ="cotizante",
+                Medico = medico2
                 
             };
             new CrearPacienteService(unitOfWork).CrearPaciente(paciente);
@@ -232,8 +248,8 @@ namespace Aplication.Test
             request.IdPaciente = "1234";
             DetectarEnfermedadServiceApp service8 = new DetectarEnfermedadServiceApp (new UnitOfWork(_context));
             var responseapp = service8.detectar(request);
-            Assert.AreEqual(responseapp.diagnostico.Enfermedad.Nombre,"cancer-pulmonar");
-            Console.WriteLine("su diagnostico es " + responseapp.diagnostico.Descripcion);
+            Assert.AreEqual(responseapp.Message, "se le manda tratamiento");
+            Console.WriteLine("su diagnostico es " + responseapp.MensajeDiagnostico);
         }
 
        
