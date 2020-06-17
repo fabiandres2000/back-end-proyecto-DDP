@@ -1,7 +1,7 @@
 node {
 
   stage('Checkout') {
-     url: 'git@github.com:fabiandres2000/back-end-proyecto-DDP.git',branch: 'master'
+     url: 'https://github.com/fabiandres2000/back-end-proyecto-DDP.git',branch: 'master'
   }
   //SignusFinanciero.sln
   stage ('Restore Nuget') {
