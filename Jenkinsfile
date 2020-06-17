@@ -24,7 +24,7 @@ node {
     
 
   stage('Publish') {
-    bat 'dotnet publish WebApi/WebApi.csproj -c Release -o C:/Users/USUARIO/source/repos/back-end-proyecto-DDP'
+    bat 'dotnet publish WebApi/WebApi.csproj -c Release -o C:/Deployback-end-proyecto-DDP'
   } 
   
 }
