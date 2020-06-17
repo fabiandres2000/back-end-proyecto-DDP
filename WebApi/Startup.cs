@@ -30,10 +30,11 @@ namespace WebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var connectionString = Configuration.GetConnectionString("EpsContext");
 
             #region Inyeccion de Manejo de Base de datos
             services.AddDbContext<EpsContext>
-                (opt => opt.UseSqlServer(@"Server=DESKTOP-Q5U0CKK\SQLEXPRESS;Database=EpsBD;Integrated Security=True;"));
+                (opt => opt.UseSqlServer(connectionString));
             #endregion
             
             #region Inyeccion de Servicios Custom
