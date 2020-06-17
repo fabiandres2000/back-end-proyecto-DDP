@@ -33,7 +33,7 @@ namespace Application.Services
                 return new AtenderCitaResponse() { Message = $"Esta cita  ha sido cancelada" };
             }
 
-            cita.Estado = "atendida";
+            cita.Estado = "atendido";
             _unitOfWork.CitaRepository.Edit(cita);
             _unitOfWork.Commit();
             return new AtenderCitaResponse() { Message = $"Esta cita se ha atendido satisfactoriamente" };
