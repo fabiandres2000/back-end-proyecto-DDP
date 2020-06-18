@@ -5,7 +5,7 @@ node {
   }
   //SignusFinanciero.sln
   stage ('Restore Nuget') {
-  bat "dotnet restore ExampleDdd.sln"
+    bat "dotnet restore ExampleDdd.sln"
   }
   
   stage('Clean') {
