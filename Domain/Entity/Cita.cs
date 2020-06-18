@@ -16,7 +16,7 @@ namespace Domain.Entity
         public string Estado { get; set; }
         public string Asignar(Cita cita)
         {
-            if (cita.Fecha == null || cita.Hora == null || cita.Minuto == null || cita.Medico==null || cita.Paciente==null)
+            if (cita.Fecha == null || cita.Hora == 0 || cita.Minuto == 0 || cita.Medico==null || cita.Paciente==null)
             {
                 return "Digite los campos primordiales para su registro";
             }
